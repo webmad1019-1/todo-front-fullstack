@@ -1,12 +1,11 @@
 import moment from "moment";
-import {randomInt} from "./Utils"
 
 export default class TaskElement {
-    constructor(description) {
-        this._id = randomInt(1000, 1000000000)
+    constructor(_id, description, timestamp, favourited, done) {
+        this._id = _id
         this.description = description;
-        this.timestamp = moment().format("DD/MM/Y hh:mm:ss")
-        this.favourited = false;
-        this.done = false;
+        this.timestamp = moment(timestamp).format("DD/MM/Y hh:mm:ss")
+        this.favourited = favourited;
+        this.done = done;
     }
 }

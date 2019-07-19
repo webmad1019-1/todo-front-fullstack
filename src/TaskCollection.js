@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TaskList from './TaskList';
 import "./TaskCollection.css";
 import TaskElement from "./TaskElement"
+import axios from 'axios';
 
 export default class TaskCollection extends Component {
     constructor() {
@@ -9,10 +10,25 @@ export default class TaskCollection extends Component {
 
         this.state = {
             newTaskString: "",
-            tasks: [
-                new TaskElement("pan")
-            ]
+            tasks: []
         }
+    }
+
+    componentDidMount() {
+        axios
+            .get("http://localhost:7000/tasks")
+            .then(allTasks => {
+                allTasks = allTasks.data.map(task => {
+                    return new TaskElement(
+                        task._id, task.description, task.timestamp, task.favourited, task.done
+                    )
+                })
+
+                this.setState({
+                    ...this.state,
+                    tasks: allTasks
+                })
+            })
     }
 
     toggle(taskID, property) {
@@ -20,9 +36,18 @@ export default class TaskCollection extends Component {
 
         chosenTask[property] = !chosenTask[property]
 
-        this.setState({
-            ...this.state
-        })
+        axios
+            .put(`http://localhost:7000/task/${taskID}`, {
+                done: chosenTask.done,
+                favourited: chosenTask.favourited
+            })
+            .then(updatedTaskInfo => {
+                console.log(updatedTaskInfo);
+
+                this.setState({
+                    ...this.state
+                })
+            })
     }
 
     updateNewTaskString(e) {
@@ -34,14 +59,25 @@ export default class TaskCollection extends Component {
 
     addNewTask(e) {
         if (e.key === 'Enter') {
-            let tasksClonedArray = [...this.state.tasks]
-            tasksClonedArray.unshift(new TaskElement(this.state.newTaskString))
-
-            this.setState({
-                ...this.state,
-                tasks: tasksClonedArray,
-                newTaskString: ""
+            axios.post("http://localhost:7000/task", {
+                "description": this.state.newTaskString
             })
+                .then(createdTask => {
+                    let tasksClonedArray = [...this.state.tasks]
+
+                    createdTask = createdTask.data
+
+                    tasksClonedArray.unshift(
+                        new TaskElement(createdTask._id, createdTask.description, createdTask.timestamp, createdTask.favourited, createdTask.done)
+                    )
+
+                    this.setState({
+                        ...this.state,
+                        tasks: tasksClonedArray,
+                        newTaskString: ""
+                    })
+                })
+
         }
     }
 
