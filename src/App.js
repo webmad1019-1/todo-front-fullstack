@@ -6,6 +6,7 @@ export default class App extends Component {
     return (
       <React.Fragment>
         <TaskCollection></TaskCollection>
+        {/* <div className="background"></div> */}
       </React.Fragment>
     )
   }
