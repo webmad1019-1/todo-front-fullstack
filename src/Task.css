@@ -1,0 +1,31 @@
+.task {
+    display: flex;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: linear-gradient(#fff, #e6e4ea);
+    color: #40403f;
+}
+
+.task .done {
+    --dimensions: 31px;
+    background-image: url(./img/checkbox.png);
+    height: var(--dimensions);
+    width: var(--dimensions);
+    margin-right: 1.5rem;
+}
+
+.task .favourite {
+    --dimensions: 31px;
+    height: var(--dimensions);
+    width: var(--dimensions);
+    margin-right: 1.5rem;
+}
+
+.task .name {
+    font-size: 1.6rem;
+}
+
+.task .timestamp {
+    font-size: 1.2rem;
+    color: #747474;
+}
