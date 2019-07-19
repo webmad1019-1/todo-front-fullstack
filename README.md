@@ -1,4 +1,12 @@
-## refactor
+# TODO app - front end fullstack
+
+## Instructions
+
+Do an `npm install` and then a `npm start`. Made using `create-react-app`
+
+------
+
+#### In the classroom, we made a refactor
 
 from
 
