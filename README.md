@@ -1,7 +1,9 @@
-refactor from
+## refactor
+
+from
 
 
-toggleDone(taskID) {
+    toggleDone(taskID) {
         let chosenTask = this.state.tasks.filter(task => task._id === taskID)[0]
 
         chosenTask.done = !chosenTask.done
